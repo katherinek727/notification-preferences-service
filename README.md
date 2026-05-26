@@ -230,3 +230,88 @@ If I were to take this service to production, I would:
 ## License
 
 ISC
+## Testing
+
+The service includes comprehensive test coverage:
+
+### Test Structure
+
+```
+src/__tests__/
+├── test-utils.ts              # Test utilities and constants
+├── setup.ts                   # Test setup and teardown
+├── db-test-utils.ts          # Database test utilities
+├── business-scenarios.test.ts # Business requirement tests
+├── e2e-flow.test.ts          # End-to-end flow tests
+└── integration/
+    └── api.test.ts           # API integration tests
+
+src/domain/__tests__/
+├── UserPreferences.entity.test.ts
+└── NotificationEvaluator.service.test.ts
+
+src/application/__tests__/
+└── GetUserPreferences.use-case.test.ts
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run unit tests only
+npm run test:unit
+
+# Run integration tests only
+npm run test:integration
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run CI tests
+npm run test:ci
+```
+
+### Test Coverage
+
+The tests cover:
+
+1. **Domain Layer**: Business entities, services, and rules
+2. **Application Layer**: Use cases and DTO validation
+3. **Infrastructure Layer**: Repositories and API controllers
+4. **Integration**: API endpoints and database interactions
+5. **Business Scenarios**: All requirements from the specification
+6. **End-to-End**: Complete user journeys
+
+### Test Database
+
+Tests use a separate test database (`notification_preferences_test`). The test database is automatically:
+- Created and migrated before tests
+- Cleared between test cases
+- Torn down after tests
+
+### Test Scenarios Covered
+
+Based on the requirements, tests verify:
+
+1. **New User and Defaults**: Default preferences for new users
+2. **User Preference Changes**: Idempotent updates and reflection in evaluation
+3. **Quiet Hours**: Time-based blocking for marketing notifications
+4. **Global Policies**: Region-based notification restrictions
+5. **Idempotent Operations**: Safe, repeatable preference updates
+6. **Complex Combinations**: Multiple rules applied together
+7. **Error Handling**: Validation errors and edge cases
+8. **Performance**: Concurrent requests and rapid updates
+
+### Test Data
+
+Test data includes:
+- Sample users with various preference configurations
+- Default preferences matching common use cases
+- Global policies for different regions
+- Quiet hours configurations
+- Notification evaluation test cases
